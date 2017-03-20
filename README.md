@@ -50,20 +50,4 @@ Add the PNG file and R code file to your git repository
 
 When you are finished with the assignment, push your git repository to GitHub so that the GitHub version of your repository is up to date. There should be four PNG files and four R code files.
 
-The four plots that you will need to construct are shown below.
 
-Plot 1
-
-plot of chunk unnamed-chunk-2
-
-Plot 2
-
-plot of chunk unnamed-chunk-3
-
-Plot 3
-
-plot of chunk unnamed-chunk-4
-
-Plot 4
-
-plot of chunk unnamed-chunk-5
