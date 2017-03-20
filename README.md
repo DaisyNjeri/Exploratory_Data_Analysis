@@ -1,86 +1,69 @@
 # Exploratory_Data_Analysis
 Creating plots
-#setting the Working Directory
-setwd("E:/M/coursera/data_science_specialization/Rstudio projects/Exploratory Data Analysis/course4")
 
+Introduction
 
-#Downloading the Data
-if(!file.exists("./course4")){dir.create("./course4")}
-download.file(url='https://d396qusza40orc.cloudfront.net/exdata%2Fdata%2Fhousehold_power_consumption.zip', destfile='cons.zip', method='auto')
-unzip(zipfile='cons.zip')
+This assignment uses data from the UC Irvine Machine Learning Repository, a popular repository for machine learning datasets. In particular, we will be using the "Individual household electric power consumption Data Set" which I have made available on the course web site:
 
+Dataset: Electric power consumption [20Mb]
 
-#Checking the Memory Required
-memory_required <- 9 * 2075259 * 8 #bytes/numeric
-mem_in_MBs <- memory_required / 2^20  #bytes/MB
-mem_in_MBs
+Description: Measurements of electric power consumption in one household with a one-minute sampling rate over a period of almost 4 years. Different electrical quantities and some sub-metering values are available.
 
+The following descriptions of the 9 variables in the dataset are taken from the UCI web site:
 
-#Reading the data
-df1 <- read.table("household_power_consumption.txt", sep = ";", header = TRUE)
+Date: Date in format dd/mm/yyyy
+Time: time in format hh:mm:ss
+Global_active_power: household global minute-averaged active power (in kilowatt)
+Global_reactive_power: household global minute-averaged reactive power (in kilowatt)
+Voltage: minute-averaged voltage (in volt)
+Global_intensity: household global minute-averaged current intensity (in ampere)
+Sub_metering_1: energy sub-metering No. 1 (in watt-hour of active energy). It corresponds to the kitchen, containing mainly a dishwasher, an oven and a microwave (hot plates are not electric but gas powered).
+Sub_metering_2: energy sub-metering No. 2 (in watt-hour of active energy). It corresponds to the laundry room, containing a washing-machine, a tumble-drier, a refrigerator and a light.
+Sub_metering_3: energy sub-metering No. 3 (in watt-hour of active energy). It corresponds to an electric water-heater and an air-conditioner.
+Loading the data
 
+When loading the dataset into R, please consider the following:
 
-#Converting the Date Column from factor to date
-df1$Date <- as.Date(df1$Date, "%d/%m/%Y")
-date1 <- as.Date("01/02/2007", "%d/%m/%Y")
-date2 <- as.Date("02/02/2007", "%d/%m/%Y" )
+The dataset has 2,075,259 rows and 9 columns. First calculate a rough estimate of how much memory the dataset will require in memory before reading into R. Make sure your computer has enough memory (most modern computers should be fine).
 
+We will only be using data from the dates 2007-02-01 and 2007-02-02. One alternative is to read the data from just those dates rather than reading in the entire dataset and subsetting to those dates.
 
-df <-  df1[df1$Date %in% date1:date2, ]
-ds <-  df1[df1$Date %in% date1:date2, ]
+You may find it useful to convert the Date and Time variables to Date/Time classes in R using the strptime() and as.Date() functions.
 
-datetime <- strptime(paste(ds$Date, ds$Time, sep=" "), "%d/%m/%Y %H:%M:%S") 
-globalActivePower <- as.numeric(ds$Global_active_power)/500
-hist(globalActivePower, col="red", main="Global Active Power", xlab="Global Active Power (kilowatts)")
+Note that in this dataset missing values are coded as ?.
 
-nrow(df) 
-summary(df)
+Making Plots
 
-head(df, 2); tail(df, 2)
-head(df, 5)
+Our overall goal here is simply to examine how household energy usage varies over a 2-day period in February, 2007. Your task is to reconstruct the following plots below, all of which were constructed using the base plotting system.
 
-#Plot 1
-png("plot1.png", width = 480, height = 480)
-hist(as.numeric(df$Global_active_power)/ 500, col = "red", main = "Global Active Power",
-     xlab = "Global Active Power (kilowatts)", ylim = c(0, 1200))
-dev.off()
+First you will need to fork and clone the following GitHub repository: https://github.com/rdpeng/ExData_Plotting1
 
+For each plot you should
 
-#Plot 2
-b <- ts(df$Global_active_power)
-png("plot2.png", width = 480, height = 480)
-plot(b/500, ylab = "Global Active Power (kilowatts)")
-dev.off()
+Construct the plot and save it to a PNG file with a width of 480 pixels and a height of 480 pixels.
 
+Name each of the plot files as plot1.png, plot2.png, etc.
 
-#plot 3
-dfc <- df[,c(7:9)]
-head(dfc)
-d <- ts(dfc)
-png("plot3.png", width = 480, height = 480)
-plot(d, plot.type = "single", xaxt = "n", ylab = "Energy sub metering", col = c("black", "red", "blue"))
-legend("topright", legend=c("Sub_metering_1", "Sub_metering_2", "Sub_metering_3"),
-       col=c("black", "red", "blue"), lty=1, cex=0.8)
+Create a separate R code file (plot1.R, plot2.R, etc.) that constructs the corresponding plot, i.e. code in plot1.R constructs the plot1.png plot. Your code file should include code for reading the data so that the plot can be fully reproduced. You should also include the code that creates the PNG file.
 
-#axis(2, df$Date, format(weekdays(df$Date)), cex.axis = .8)
-dev.off()
+Add the PNG file and R code file to your git repository
 
+When you are finished with the assignment, push your git repository to GitHub so that the GitHub version of your repository is up to date. There should be four PNG files and four R code files.
 
-#plot 4
-dev.off()
-png("plot4.png", width = 480, height = 480)
-par(mfrow = c(2,2))
+The four plots that you will need to construct are shown below.
 
-plot(b)
+Plot 1
 
-e <- ts(df[,5])
-plot(e)
+plot of chunk unnamed-chunk-2
 
-plot(d, plot.type = "single", xaxt = "n", ylab = "Energy sub metering", col = c("black", "red", "blue"))
-legend("topright", legend=c("Sub_metering_1", "Sub_metering_2", "Sub_metering_3"),
-       col=c("black", "red", "blue"), bty = "n", lty=1, cex=0.65)
+Plot 2
 
-f <- ts(df[,4])
-plot(f, ylab = "Global_reactive_power", xlab = "datetime")
+plot of chunk unnamed-chunk-3
 
-dev.off()
+Plot 3
+
+plot of chunk unnamed-chunk-4
+
+Plot 4
+
+plot of chunk unnamed-chunk-5
